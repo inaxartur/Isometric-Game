@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bx7qeyy05d4i2"]
+
+[ext_resource type="Script" uid="uid://c5n3jpbwjhus4" path="res://Components/WeaponComponent/weapon_component.gd" id="1_xbyqx"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xbyqx"]
+radius = 13.0
+
+[node name="WeaponComponent" type="Node2D"]
+script = ExtResource("1_xbyqx")
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="Collider" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_xbyqx")
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
