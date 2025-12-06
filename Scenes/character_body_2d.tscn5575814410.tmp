@@ -425,42 +425,6 @@ tracks/5/keys = {
 "update": 0,
 "values": [0.0]
 }
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("CharacterControllerComponent:SPEED")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [100.0]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("CharacterControllerComponent:is_dodging")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("CharacterControllerComponent:ACCEL")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [10.0]
-}
 
 [sub_resource type="Animation" id="Animation_2dyae"]
 resource_name = "dodge"
@@ -520,22 +484,10 @@ tracks/4/path = NodePath("CharacterControllerComponent:is_dodging")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0.3),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [false]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("CharacterControllerComponent:ACCEL")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [20.0]
+"values": [true, false]
 }
 
 [sub_resource type="Animation" id="Animation_wyqjk"]
@@ -1203,11 +1155,11 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dd465"]
 advance_mode = 2
-advance_expression = "character.direction"
+advance_expression = "direction"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_6ct3r"]
 advance_mode = 2
-advance_expression = "!character.direction"
+advance_expression = "!direction"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qp52p"]
 switch_mode = 1
@@ -1257,7 +1209,7 @@ autoplay = "RESET"
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_4sjlk")
-advance_expression_base_node = NodePath("../CharacterControllerComponent")
+advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
 parameters/idle/blend_position = Vector2(-0.05827266, -0.22141123)
 parameters/walk/blend_position = Vector2(-0.50454545, 0.5182482)
@@ -1301,6 +1253,7 @@ debug_color = Color(0.78541535, 0.3601316, 0.628133, 0.41960785)
 
 [node name="CharacterControllerComponent" type="Node2D" parent="." node_paths=PackedStringArray("character")]
 script = ExtResource("9_601d1")
+SPEED = 0.0
 character = NodePath("..")
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
