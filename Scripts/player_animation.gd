@@ -14,3 +14,4 @@ func _process(delta: float) -> void:
 		last_facing_direction = character_controller.direction
 		animation_tree.set("parameters/walk/blend_position", last_facing_direction)
 		animation_tree.set("parameters/idle/blend_position", last_facing_direction)
+		animation_tree.set("parameters/attack/blend_position", last_facing_direction)

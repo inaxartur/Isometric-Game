@@ -7,6 +7,7 @@ class_name CharacterControllerComponent
 @export var direction = Vector2.ZERO
 @export var is_dodging : bool
 @export var character : CharacterBody2D
+@export var is_attacking = false
 
 var last_direction = Vector2.ZERO
 
@@ -16,9 +17,10 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	
-	if (Input.is_action_just_pressed("dodge") && !is_dodging):
+	if Input.is_action_just_pressed("dodge") and !is_dodging:
 		is_dodging = true
+	if Input.is_action_just_pressed("attack") and !is_attacking:
+		is_attacking = true
 
 	if is_dodging:
 		character.velocity = lerp(character.velocity, last_direction * SPEED, ACCEL * delta)
