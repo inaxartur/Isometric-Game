@@ -24,6 +24,3 @@ tile_set = ExtResource("1_8gbba")
 z_index = 4
 texture_filter = 1
 position = Vector2(411, 338)
-
-[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
-zoom = Vector2(2.555, 2.555)
