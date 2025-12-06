@@ -1,4 +1,4 @@
-[gd_scene load_steps=152 format=3 uid="uid://48uyc3st0y6q"]
+[gd_scene load_steps=154 format=3 uid="uid://48uyc3st0y6q"]
 
 [ext_resource type="Texture2D" uid="uid://ighlyaulck1f" path="res://Assets/Player/atc.png" id="2_6d06k"]
 [ext_resource type="Texture2D" uid="uid://m5mke8e2rbrl" path="res://Assets/Player/idl.png" id="2_44cfe"]
@@ -2238,18 +2238,27 @@ switch_mode = 2
 advance_mode = 2
 advance_expression = "is_attacking == false"
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ancw4"]
+advance_mode = 2
+advance_expression = "is_attacking == true"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8ldn0"]
+switch_mode = 2
+advance_mode = 2
+advance_expression = "is_attacking == false"
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_4sjlk"]
 states/Start/position = Vector2(91, 52)
 states/attack/node = SubResource("AnimationNodeBlendSpace2D_l447x")
-states/attack/position = Vector2(383, -72)
+states/attack/position = Vector2(290, 153)
 states/dodge/node = SubResource("AnimationNodeAnimation_wyqjk")
 states/dodge/position = Vector2(619, 52)
 states/idle/node = SubResource("AnimationNodeBlendSpace2D_dd465")
-states/idle/position = Vector2(383, 169)
+states/idle/position = Vector2(484, 153)
 states/walk/node = ExtResource("4_44cfe")
 states/walk/position = Vector2(383, 52)
-transitions = ["Start", "walk", SubResource("AnimationNodeStateMachineTransition_lhvu3"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_dd465"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_6ct3r"), "walk", "dodge", SubResource("AnimationNodeStateMachineTransition_qp52p"), "dodge", "walk", SubResource("AnimationNodeStateMachineTransition_1kp85"), "walk", "attack", SubResource("AnimationNodeStateMachineTransition_6d06k"), "attack", "walk", SubResource("AnimationNodeStateMachineTransition_p20bj")]
-graph_offset = Vector2(-443, -141)
+transitions = ["Start", "walk", SubResource("AnimationNodeStateMachineTransition_lhvu3"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_dd465"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_6ct3r"), "walk", "dodge", SubResource("AnimationNodeStateMachineTransition_qp52p"), "dodge", "walk", SubResource("AnimationNodeStateMachineTransition_1kp85"), "walk", "attack", SubResource("AnimationNodeStateMachineTransition_6d06k"), "attack", "walk", SubResource("AnimationNodeStateMachineTransition_p20bj"), "idle", "attack", SubResource("AnimationNodeStateMachineTransition_ancw4"), "attack", "idle", SubResource("AnimationNodeStateMachineTransition_8ldn0")]
+graph_offset = Vector2(-741, -39)
 
 [sub_resource type="Gradient" id="Gradient_dd465"]
 colors = PackedColorArray(0.9858449, 0.58173573, 0.80562806, 1, 0.6410356, 0.9530397, 0.9999998, 1)
@@ -2323,9 +2332,12 @@ health_component = NodePath("../HealthComponent")
 shape = SubResource("CapsuleShape2D_qp52p")
 debug_color = Color(0.78541535, 0.3601316, 0.628133, 0.41960785)
 
-[node name="CharacterControllerComponent" type="Node2D" parent="." node_paths=PackedStringArray("character")]
+[node name="CharacterControllerComponent" type="Node2D" parent="." node_paths=PackedStringArray("character", "dodge_cooldown", "attack_cooldown", "stamina_bar")]
 script = ExtResource("9_601d1")
 character = NodePath("..")
+dodge_cooldown = NodePath("../DodgeCooldown")
+attack_cooldown = NodePath("../AttackCooldown")
+stamina_bar = NodePath("../StaminaBar")
 
 [node name="AttackComponent" parent="." node_paths=PackedStringArray("character") instance=ExtResource("9_6d06k")]
 character = NodePath("../CharacterControllerComponent")
@@ -2336,5 +2348,27 @@ character = NodePath("../CharacterControllerComponent")
 shape = SubResource("CircleShape2D_6d06k")
 disabled = true
 
+[node name="AttackCooldown" type="Timer" parent="."]
+wait_time = 0.7
+
+[node name="DodgeCooldown" type="Timer" parent="."]
+wait_time = 0.8
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+
+[node name="StaminaBar" type="ProgressBar" parent="."]
+modulate = Color(0, 0.49381942, 0.9749542, 1)
+self_modulate = Color(0.21120411, 0.44020537, 1, 1)
+offset_left = -280.0
+offset_top = -157.0
+offset_right = -230.0
+offset_bottom = -130.0
+scale = Vector2(1, 0.5)
+step = 0.1
+show_percentage = false
+
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="area_entered" from="AttackHitbox" to="AttackComponent" method="_on_area_2d_area_entered"]
+[connection signal="timeout" from="AttackCooldown" to="CharacterControllerComponent" method="_on_attack_cooldown_timeout"]
+[connection signal="timeout" from="DodgeCooldown" to="CharacterControllerComponent" method="_on_dodge_cooldown_timeout"]
