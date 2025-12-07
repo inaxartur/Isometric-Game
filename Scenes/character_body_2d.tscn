@@ -882,10 +882,10 @@ tracks/5/path = NodePath("CharacterControllerComponent:is_attacking")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0.6),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [false]
+"values": [true, false]
 }
 
 [sub_resource type="Animation" id="Animation_3d168"]
@@ -958,10 +958,10 @@ tracks/5/path = NodePath("CharacterControllerComponent:is_attacking")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0.6),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [false]
+"values": [true, false]
 }
 
 [sub_resource type="Animation" id="Animation_o8di4"]
@@ -1034,10 +1034,10 @@ tracks/5/path = NodePath("CharacterControllerComponent:is_attacking")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0.6),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [false]
+"values": [true, false]
 }
 
 [sub_resource type="Animation" id="Animation_8ldn0"]
@@ -1110,10 +1110,10 @@ tracks/5/path = NodePath("CharacterControllerComponent:is_attacking")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0.6),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [false]
+"values": [true, false]
 }
 
 [sub_resource type="Animation" id="Animation_ancw4"]
@@ -1186,10 +1186,10 @@ tracks/5/path = NodePath("CharacterControllerComponent:is_attacking")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0.6),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [false]
+"values": [true, false]
 }
 
 [sub_resource type="Animation" id="Animation_6d06k"]
@@ -1262,10 +1262,10 @@ tracks/5/path = NodePath("CharacterControllerComponent:is_attacking")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0.6),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [false]
+"values": [true, false]
 }
 
 [sub_resource type="Animation" id="Animation_x0qg5"]
@@ -1338,10 +1338,10 @@ tracks/5/path = NodePath("CharacterControllerComponent:is_attacking")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0.6),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [false]
+"values": [true, false]
 }
 
 [sub_resource type="Animation" id="Animation_q07ms"]
@@ -1414,10 +1414,10 @@ tracks/5/path = NodePath("CharacterControllerComponent:is_attacking")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0.6),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [false]
+"values": [true, false]
 }
 
 [sub_resource type="Animation" id="Animation_2dyae"]
@@ -2258,7 +2258,7 @@ states/idle/position = Vector2(484, 153)
 states/walk/node = ExtResource("4_44cfe")
 states/walk/position = Vector2(383, 52)
 transitions = ["Start", "walk", SubResource("AnimationNodeStateMachineTransition_lhvu3"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_dd465"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_6ct3r"), "walk", "dodge", SubResource("AnimationNodeStateMachineTransition_qp52p"), "dodge", "walk", SubResource("AnimationNodeStateMachineTransition_1kp85"), "walk", "attack", SubResource("AnimationNodeStateMachineTransition_6d06k"), "attack", "walk", SubResource("AnimationNodeStateMachineTransition_p20bj"), "idle", "attack", SubResource("AnimationNodeStateMachineTransition_ancw4"), "attack", "idle", SubResource("AnimationNodeStateMachineTransition_8ldn0")]
-graph_offset = Vector2(-741, -39)
+graph_offset = Vector2(-712, -15)
 
 [sub_resource type="Gradient" id="Gradient_dd465"]
 colors = PackedColorArray(0.9858449, 0.58173573, 0.80562806, 1, 0.6410356, 0.9530397, 0.9999998, 1)
@@ -2322,8 +2322,9 @@ color_ramp = SubResource("Gradient_dd465")
 hue_variation_min = 0.67
 hue_variation_max = 0.67
 
-[node name="HealthComponent" parent="." instance=ExtResource("7_qp52p")]
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("HEALTH_BAR") instance=ExtResource("7_qp52p")]
 MAX_HEALTH = 100.0
+HEALTH_BAR = NodePath("../HealthBar")
 
 [node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("8_6ct3r")]
 health_component = NodePath("../HealthComponent")
@@ -2339,8 +2340,9 @@ dodge_cooldown = NodePath("../DodgeCooldown")
 attack_cooldown = NodePath("../AttackCooldown")
 stamina_bar = NodePath("../StaminaBar")
 
-[node name="AttackComponent" parent="." node_paths=PackedStringArray("character") instance=ExtResource("9_6d06k")]
+[node name="AttackComponent" parent="." node_paths=PackedStringArray("character", "attack_component") instance=ExtResource("9_6d06k")]
 character = NodePath("../CharacterControllerComponent")
+attack_component = NodePath(".")
 
 [node name="AttackHitbox" type="Area2D" parent="."]
 
@@ -2357,13 +2359,24 @@ wait_time = 0.8
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
 
+[node name="HealthBar" type="ProgressBar" parent="."]
+modulate = Color(0.73144937, 0, 0.19737014, 1)
+self_modulate = Color(0.91390306, 0, 0.27073532, 1)
+offset_left = -286.0
+offset_top = -160.0
+offset_right = -236.0
+offset_bottom = -133.0
+scale = Vector2(1, 0.5)
+step = 0.1
+show_percentage = false
+
 [node name="StaminaBar" type="ProgressBar" parent="."]
 modulate = Color(0, 0.49381942, 0.9749542, 1)
 self_modulate = Color(0.21120411, 0.44020537, 1, 1)
-offset_left = -280.0
-offset_top = -157.0
-offset_right = -230.0
-offset_bottom = -130.0
+offset_left = -286.0
+offset_top = -145.0
+offset_right = -236.0
+offset_bottom = -118.0
 scale = Vector2(1, 0.5)
 step = 0.1
 show_percentage = false

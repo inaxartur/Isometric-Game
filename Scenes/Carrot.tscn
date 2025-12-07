@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=3 uid="uid://b5cojmqte1o5i"]
+
+[ext_resource type="Texture2D" uid="uid://dvb62fqq6ba86" path="res://Assets/Plants/Carrot.png" id="1_0qkdr"]
+[ext_resource type="PackedScene" uid="uid://j6j20abyovgq" path="res://Components/HealthComponent/HealthComponent.tscn" id="2_we5g7"]
+[ext_resource type="PackedScene" uid="uid://fjtl4acal66u" path="res://Components/HitboxComponent/HitboxComponent.tscn" id="3_me8c5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5el3n"]
+atlas = ExtResource("1_0qkdr")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_606kj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5el3n")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yr8pu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tocwk"]
+
+[node name="Carrot" type="StaticBody2D"]
+collision_layer = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(-1, -3)
+scale = Vector2(0.994534, 1)
+sprite_frames = SubResource("SpriteFrames_606kj")
+
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("HEALTH_BAR") instance=ExtResource("2_we5g7")]
+MAX_HEALTH = 30.0
+HEALTH_BAR = NodePath("../HealthBar")
+
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") groups=["hitbox"] instance=ExtResource("3_me8c5")]
+health_component = NodePath("../HealthComponent")
+
+[node name="HitboxCollider" type="CollisionShape2D" parent="HitboxComponent"]
+scale = Vector2(1.1202669, 1.1202669)
+shape = SubResource("RectangleShape2D_yr8pu")
+debug_color = Color(0.84124446, 0.2857525, 0.6487474, 0.41960785)
+
+[node name="CarrotCollider" type="CollisionShape2D" parent="."]
+light_mask = 0
+visibility_layer = 0
+shape = SubResource("RectangleShape2D_tocwk")
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+visible = false
+modulate = Color(0.81743705, 0, 0.24997279, 1)
+self_modulate = Color(0.83913594, 0, 0.24339545, 1)
+offset_left = -25.0
+offset_top = -22.0
+offset_right = 75.0
+offset_bottom = 5.0
+scale = Vector2(0.5, 0.25)
+show_percentage = false

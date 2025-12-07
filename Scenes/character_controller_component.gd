@@ -22,6 +22,7 @@ var dodge_stamina_cost := 27.5
 var attack_stamina_cost := 17.5
 var stamina_regen_rate := 15.0
 
+
 ## Ready function ##
 func _ready() -> void:
 	is_dodging = false
@@ -30,6 +31,7 @@ func _ready() -> void:
 	assert(character, "No CharacterBody2D provided in CharacterControllerComponent!")
 	stamina = max_stamina
 	set_stamina_label()
+
 
 ## physics process function
 func _physics_process(delta: float) -> void:
@@ -40,6 +42,8 @@ func _physics_process(delta: float) -> void:
 	movementHandler(delta)
 	character.move_and_slide()
 
+
+## Functions
 func set_stamina_label() -> void:
 	stamina_bar.value = stamina
  
