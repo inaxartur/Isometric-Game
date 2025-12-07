@@ -9,6 +9,7 @@ var last_facing_direction := Vector2.ZERO
 func _ready() -> void:
 	assert(character_controller, "No CharacterControllerComponent in player animation!")
 # Called every frame. 'delta' is the elapsed time since the previous frame.
+
 func _process(delta: float) -> void:
 	if character_controller.direction != Vector2.ZERO && character_controller.is_dodging == false:
 		last_facing_direction = character_controller.direction
