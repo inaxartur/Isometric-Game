@@ -1,52 +1,29 @@
-extends Node2D
-class_name CharacterControllerComponent
+extends Player
+class_name VirtualPlayer
 
-@export var SPEED = 100.0
-@export var ACCEL = 10.0
-@export var FRICTION = 15.0
-@export var direction = Vector2.ZERO
-@export var is_dodging : bool
-@export var character : CharacterBody2D
-@export var dodge_cooldown : Timer
-@export var attack_cooldown : Timer
-@export var stamina_bar : ProgressBar
-@export var is_attacking = false
-
-const max_stamina := 100.0
-var stamina : float
-
-var last_direction = Vector2.ZERO
-
-# Values that can be changed:
-var dodge_stamina_cost := 27.5
-var attack_stamina_cost := 17.5
-var stamina_regen_rate := 15.0
-
-
+@export var nav : NavigationAgent2D
 ## Ready function ##
 func _ready() -> void:
-	is_dodging = false
-	assert(attack_cooldown, "No Attack Timer provided in CharacterControllerComponent")
-	assert(dodge_cooldown, "No Dodge Timer provided in CharacterControllerComponent")
-	assert(character, "No CharacterBody2D provided in CharacterControllerComponent!")
-	stamina = max_stamina
-	set_stamina_label()
+	super._ready()
+	assert(nav, "No navigation agent provided!")
+	
+	
 
+func actor_setup():
+	# Wait for the first physics frame so the NavigationServer can sync.
+	await get_tree().physics_frame
+	# Now that the navigation map is no longer empty, set the movement target.
+	set_movement_target(player.position)
 
+func set_movement_target(movement_target: Vector2):
+	nav.target_position = movement_target
+	
 ## physics process function
 func _physics_process(delta: float) -> void:
-	direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	
-	inputHandler()
 	staminaRegen(delta)
 	movementHandler(delta)
 	character.move_and_slide()
 
-
-## Functions
-func set_stamina_label() -> void:
-	stamina_bar.value = stamina
- 
 func staminaRegen(delta: float) -> void:
 	set_stamina_label()
 	if (stamina < max_stamina) and !is_dodging and !is_attacking:

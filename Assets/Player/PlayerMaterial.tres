@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://chgrm8m1avhnq"]
+
+[ext_resource type="Shader" uid="uid://bc8v5pkeyg3ld" path="res://Shaders/character_body_2d.gdshader" id="1_kfno4"]
+
+[resource]
+shader = ExtResource("1_kfno4")
+shader_parameter/color = Color(0.5176471, 1, 1, 1)
+shader_parameter/flashState = 0.0

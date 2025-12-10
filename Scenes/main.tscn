@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=4 uid="uid://dvkdg1vbtmvpu"]
+[gd_scene load_steps=6 format=4 uid="uid://dvkdg1vbtmvpu"]
 
 [ext_resource type="TileSet" uid="uid://bbk5u2vw1r8x1" path="res://Assets/tileset.tres" id="1_8gbba"]
 [ext_resource type="Script" uid="uid://htuticet6gnj" path="res://Scripts/floor.gd" id="2_jjvhh"]
 [ext_resource type="PackedScene" uid="uid://48uyc3st0y6q" path="res://Scenes/Player.tscn" id="3_kry3j"]
 [ext_resource type="PackedScene" uid="uid://b5cojmqte1o5i" path="res://Scenes/Carrot.tscn" id="4_jjvhh"]
+[ext_resource type="PackedScene" uid="uid://dw4oi8pvvlp4b" path="res://Scenes/Enemy.tscn" id="5_kry3j"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -31,3 +32,6 @@ position = Vector2(495, 340)
 
 [node name="Carrot2" parent="." instance=ExtResource("4_jjvhh")]
 position = Vector2(539, 381)
+
+[node name="Enemy" parent="." instance=ExtResource("5_kry3j")]
+position = Vector2(408, 127)

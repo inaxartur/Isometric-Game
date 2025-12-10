@@ -2,7 +2,7 @@ extends Node2D
 
 
 @export var animation_tree: AnimationTree
-@export var character_controller: CharacterControllerComponent
+@export var character_controller: Player
 
 var last_facing_direction := Vector2.ZERO
 

@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://22bhi3h5c3ij"]
+
+[ext_resource type="Shader" uid="uid://csootw2nrs8rs" path="res://Shaders/enemy.gdshader" id="1_gtn0y"]
+
+[resource]
+shader = ExtResource("1_gtn0y")
+shader_parameter/base_color = Color(1, 0, 0, 1)
+shader_parameter/color = Color(0.18606573, 0.80418736, 0.90189636, 1)
+shader_parameter/hue = 1.0
+shader_parameter/flashState = 0.0

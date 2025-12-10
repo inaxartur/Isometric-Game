@@ -2,7 +2,7 @@ extends Node2D
 class_name AttackComponent
 
 @export var attack_damage := 10.0
-@export var character : CharacterControllerComponent
+@export var character : Player
 @export var attack_component : AttackComponent
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
