@@ -7,7 +7,7 @@
 [ext_resource type="AnimationNodeBlendSpace2D" uid="uid://dvf05dawvl0ek" path="res://Animation/player_walk.tres" id="5_esfq3"]
 [ext_resource type="PackedScene" uid="uid://j6j20abyovgq" path="res://Components/HealthComponent/HealthComponent.tscn" id="6_qlal6"]
 [ext_resource type="PackedScene" uid="uid://fjtl4acal66u" path="res://Components/HitboxComponent/HitboxComponent.tscn" id="7_dascy"]
-[ext_resource type="Script" uid="uid://cpsct6vo4ccm6" path="res://Scripts/HumanPlayer.gd" id="8_rm7px"]
+[ext_resource type="Script" uid="uid://2aoiejcft85v" path="res://Scripts/VirtualPlayer.gd" id="8_0o0ue"]
 [ext_resource type="PackedScene" uid="uid://br0ko7mygjqlo" path="res://Components/AttackComponent/AttackComponent.tscn" id="9_5yix0"]
 [ext_resource type="PackedScene" uid="uid://cbogmqb6arjyy" path="res://Components/PlayerAnimationComponent/player_animation_component.tscn" id="10_imorw"]
 
@@ -2323,12 +2323,12 @@ health_component = NodePath("../HealthComponent")
 shape = SubResource("CapsuleShape2D_qp52p")
 debug_color = Color(0.78541535, 0.3601316, 0.628133, 0.41960785)
 
-[node name="CharacterControllerComponent" type="Node2D" parent="." node_paths=PackedStringArray("character", "dodge_cooldown", "attack_cooldown", "stamina_bar")]
-script = ExtResource("8_rm7px")
+[node name="CharacterControllerComponent" type="Node2D" parent="." node_paths=PackedStringArray("nav", "character", "dodge_cooldown", "attack_cooldown")]
+script = ExtResource("8_0o0ue")
+nav = NodePath("../NavigationAgent2D")
 character = NodePath("..")
 dodge_cooldown = NodePath("../DodgeCooldown")
 attack_cooldown = NodePath("../AttackCooldown")
-stamina_bar = NodePath("../StaminaBar")
 
 [node name="AttackComponent" parent="." node_paths=PackedStringArray("character", "attack_component") instance=ExtResource("9_5yix0")]
 character = NodePath("../CharacterControllerComponent")
@@ -2371,6 +2371,8 @@ show_percentage = false
 [node name="PlayerAnimationComponent" parent="." node_paths=PackedStringArray("animation_tree", "character_controller") instance=ExtResource("10_imorw")]
 animation_tree = NodePath("../AnimationTree")
 character_controller = NodePath("../CharacterControllerComponent")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="area_entered" from="AttackHitbox" to="AttackComponent" method="_on_area_2d_area_entered"]
