@@ -39,7 +39,7 @@ func _physics_process(delta: float) -> void:
 	# Get pathfinding information
 	var current_agent_position: Vector2 = global_position
 	var next_path_position: Vector2 = nav.get_next_path_position()
-
+	print_debug(global_position, next_path_position)
 	# Calculate the new velocity
 	direction = current_agent_position.direction_to(next_path_position)
 	movementHandler(delta)

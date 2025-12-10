@@ -1,17 +1,29 @@
 extends TileMapLayer
 
+var _obstacles: Array[TileMapLayer] = []
+
 func _ready() -> void:
-	var filled_tiles = get_used_cells()
-	for tile in filled_tiles:
-		var neighbouring = get_surrounding_cells(tile)
-		for neighbour: Vector2i in neighbouring:
-			if get_cell_source_id(neighbour) == -1: # checks if neighbour cell exists
-				var neighbourUnder: Vector2i = Vector2.ZERO # defining tile under neighbour tile
-				neighbourUnder.x = neighbour.x
-				neighbourUnder.y = neighbour.y + 2
-				var neighbourUp: Vector2i = Vector2.ZERO # defining tile over neighbour tile
-				neighbourUp.x = neighbour.x
-				neighbourUp.y = neighbour.y - 2
-				if get_cell_source_id(neighbourUnder) || get_cell_source_id(neighbourUp)== -1: # checks if over or under neighbour cell there is a tile
-					set_cell(neighbour, 1, Vector2i.ZERO) # sets collision
-			
+	_get_obstacle_layers()
+
+func _get_obstacle_layers():
+	# make sure the name here is the same as the group's
+	var layers = get_tree().get_nodes_in_group("obstacles")
+
+	for layer in layers:
+		if layer is not TileMapLayer: continue
+		_obstacles.append(layer)
+
+func _use_tile_data_runtime_update(coords: Vector2i) -> bool:
+	return _is_used_by_obstacle(coords)
+
+func _is_used_by_obstacle(coords: Vector2i) -> bool:
+	for layer in _obstacles:
+		if coords in layer.get_used_cells():
+			var is_obstacle = layer.get_cell_tile_data(coords).get_collision_polygons_count(0) > 0
+			if is_obstacle:
+				return true
+	return false
+
+func _tile_data_runtime_update(coords: Vector2i, tile_data: TileData) -> void:
+	if not _is_used_by_obstacle(coords):
+		tile_data.set_navigation_polygon(0, null)

@@ -8,8 +8,9 @@ var health : float
 
 func _ready() -> void:
 	health = MAX_HEALTH
-	HEALTH_BAR.max_value = MAX_HEALTH
-	set_health_label()
+	if HEALTH_BAR:
+		HEALTH_BAR.max_value = MAX_HEALTH
+		set_health_label()
 
 
 func damage(attack: AttackComponent):
