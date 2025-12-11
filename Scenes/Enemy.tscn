@@ -2259,6 +2259,8 @@ graph_offset = Vector2(-712, -15)
 colors = PackedColorArray(0.9858449, 0.58173573, 0.80562806, 1, 0.6410356, 0.9530397, 0.9999998, 1)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qp52p"]
+radius = 8.0
+height = 24.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6d06k"]
 
@@ -2314,9 +2316,9 @@ hue_variation_max = 0.67
 
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("HEALTH_BAR") instance=ExtResource("6_qlal6")]
 MAX_HEALTH = 100.0
-HEALTH_BAR = NodePath("")
+HEALTH_BAR = NodePath("../HealthBar")
 
-[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("7_dascy")]
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") groups=["hitbox"] instance=ExtResource("7_dascy")]
 health_component = NodePath("../HealthComponent")
 
 [node name="HitboxCollider" type="CollisionShape2D" parent="HitboxComponent"]
@@ -2354,6 +2356,16 @@ character_controller = NodePath("../CharacterControllerComponent")
 path_desired_distance = 30.0
 target_desired_distance = 30.0
 debug_enabled = true
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+modulate = Color(0.81743705, 0, 0.24997279, 1)
+self_modulate = Color(0.83913594, 0, 0.24339545, 1)
+offset_left = -25.0
+offset_top = -22.0
+offset_right = 75.0
+offset_bottom = 5.0
+scale = Vector2(0.5, 0.25)
+show_percentage = false
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="area_entered" from="AttackHitbox" to="AttackComponent" method="_on_area_2d_area_entered"]

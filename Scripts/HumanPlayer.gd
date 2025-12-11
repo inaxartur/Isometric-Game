@@ -7,7 +7,7 @@ func _ready() -> void:
 	set_stamina_label()
 
 
-## physics process function
+## physics process function ##
 func _physics_process(delta: float) -> void:
 	direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	
