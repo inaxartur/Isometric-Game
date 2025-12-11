@@ -2259,6 +2259,8 @@ graph_offset = Vector2(-712, -15)
 colors = PackedColorArray(0.9858449, 0.58173573, 0.80562806, 1, 0.6410356, 0.9530397, 0.9999998, 1)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qp52p"]
+radius = 8.0
+height = 24.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6d06k"]
 
@@ -2316,7 +2318,7 @@ hue_variation_max = 0.67
 MAX_HEALTH = 100.0
 HEALTH_BAR = NodePath("../HealthBar")
 
-[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("8_6ct3r")]
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") groups=["hitbox"] instance=ExtResource("8_6ct3r")]
 health_component = NodePath("../HealthComponent")
 
 [node name="HitboxCollider" type="CollisionShape2D" parent="HitboxComponent"]

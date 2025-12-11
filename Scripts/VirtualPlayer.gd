@@ -3,12 +3,39 @@ class_name VirtualPlayer
 
 @export var nav : NavigationAgent2D
 @export var tracking_player : CharacterBody2D
+@export var attackDistance := 27.5
+
 ## Ready function ##
 func _ready() -> void:
 	super._ready()
 	assert(nav, "No navigation agent provided!")
 	tracking_player = find_player()
 	actor_setup.call_deferred()
+	
+## physics process function
+func _physics_process(delta: float) -> void:
+	staminaRegen(delta)
+	var range_to_player = sqrt(pow(global_position.x - nav.target_position.x, 2.0) + pow(global_position.y - nav.target_position.y, 2.0))
+	if (range_to_player < attackDistance):
+		attack()
+	
+	# Update the player position
+	if tracking_player:
+		set_movement_target(tracking_player.position)
+
+	# If we're at the target, stop
+	if nav.is_navigation_finished():
+		return
+
+	# Get pathfinding information
+	var current_agent_position: Vector2 = global_position
+	var next_path_position: Vector2 = nav.get_next_path_position()
+	#print_debug(global_position, next_path_position)
+	# Calculate the new velocity
+	direction = current_agent_position.direction_to(next_path_position)
+	movementHandler(delta)
+	character.move_and_slide()
+
 
 func find_player():
 	return get_tree().get_nodes_in_group("players").front()
@@ -23,27 +50,6 @@ func actor_setup():
 
 func set_movement_target(movement_target: Vector2):
 	nav.target_position = movement_target
-
-## physics process function
-func _physics_process(delta: float) -> void:
-	staminaRegen(delta)
-
-	# Update the player position
-	if tracking_player:
-		set_movement_target(tracking_player.position)
-
-	# If we're at the target, stop
-	if nav.is_navigation_finished():
-		return
-
-	# Get pathfinding information
-	var current_agent_position: Vector2 = global_position
-	var next_path_position: Vector2 = nav.get_next_path_position()
-	print_debug(global_position, next_path_position)
-	# Calculate the new velocity
-	direction = current_agent_position.direction_to(next_path_position)
-	movementHandler(delta)
-	character.move_and_slide()
 
 func staminaRegen(delta: float) -> void:
 	if (stamina < max_stamina) and !is_dodging and !is_attacking:
@@ -61,6 +67,7 @@ func attack() -> void:
 	if stamina - attack_stamina_cost < 0 or !attack_cooldown.is_stopped():
 		pass
 	else:
+		print("Enemy is attacking")
 		stamina -= attack_stamina_cost
 		attack_cooldown.start()
 		is_attacking = true
